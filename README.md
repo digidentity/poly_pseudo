@@ -25,6 +25,10 @@ Or install it yourself as:
 ```ruby
 require 'poly_pseudo'
 
+identity_key   = PolyPseudo::Util.read_key(File.read('EI_Decryption.pem'))
+decryption_key = PolyPseudo::Util.read_key(File.read('EP_Decryption.pem'))
+closing_key    = PolyPseudo::Util.read_key(File.read('EP_Closing.pem'))
+
 encoded_asn1 = <<-BASE64
 MIIBVAYMYIQQAYdrg+MFAQIBAgEBAgEBFhQwMDAwMDAwNDAwMzIxNDM0NTAwMRYU
 MDAwMDAwMDMyNzMyMjYzMTAwMDACBAEzok4wgfkEUQQdTrTmvUoznOB+4bGfted+
@@ -37,10 +41,6 @@ AAAAAAAAAAA=
 BASE64
 
 identity_or_pseudonym = PolyPseudo::PseudoId.from_asn1(encoded_asn1)
-
-identity_key   = PolyPseudo::Util.read_key(File.read('EI_Decryption.pem'))
-decryption_key = PolyPseudo::Util.read_key(File.read('EP_Decryption.pem'))
-closing_key    = PolyPseudo::Util.read_key(File.read('EP_Closing.pem'))
 
 case identity_or_pseudonym
 when PolyPseudo::Identity
