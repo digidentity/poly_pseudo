@@ -46,7 +46,7 @@ case identity_or_pseudonym
 when PolyPseudo::Identity
     identity_or_pseudonym.decrypt(identity_key)
 when PolyPseudo::Pseudonym
-    identity_or_pseudonym.decrypt(descryption_key, closing_key)
+    identity_or_pseudonym.decrypt(decryption_key, closing_key)
 end
 
 puts identity_or_pseudonym.pseudo_id
