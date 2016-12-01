@@ -12,12 +12,12 @@ module PolyPseudo
 
       private_key = key.ec.private_key
 
-      identity_point = point_1.mul(private_key)
+      identity_point = point_1
+          .mul(private_key)
           .invert!
           .add(point_2)
           .make_affine!
 
-      identity_point.x.to_s(16)
       @identity = Util.oaep_decode(identity_point.x.to_s(2)).slice(3, 10)
     end
 

@@ -11,7 +11,8 @@ module PolyPseudo
       product            = decryption_private_key.mod_mul(closing_private_key, PolyPseudo.config.group.order)
       point_2_multiplied = point_2.mul(closing_private_key)
 
-      pseudo_point        = point_1.mul(product)
+      pseudo_point        = point_1
+          .mul(product)
           .invert!
           .add(point_2_multiplied)
           .make_affine!

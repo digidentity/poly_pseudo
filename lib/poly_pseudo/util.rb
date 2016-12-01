@@ -74,7 +74,7 @@ module PolyPseudo
       b2 = s2.unpack('c*')
 
       if b1.length != b2.length
-        raise DecodeError, 'cannot xor strings of different lengths!'
+        raise 'cannot xor strings of different lengths!'
       end
 
       b1.zip(b2).map { |a, b| a ^ b }.pack('c*')
