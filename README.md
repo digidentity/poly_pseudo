@@ -36,7 +36,11 @@ t38iHgW3leqaRomZgNHbjQEgCCy/2VJgdwQYDSs/j++K1KtUMOgEEAAAAAAAAAAA
 AAAAAAAAAAA=
 BASE64
 
-identity_or_pseudonym = PseudoId.from_asn1(encoded_asn1)
+identity_or_pseudonym = PolyPseudo::PseudoId.from_asn1(encoded_asn1)
+
+identity_key   = PolyPseudo::Util.read_key(File.read('EI_Decryption.pem'))
+decryption_key = PolyPseudo::Util.read_key(File.read('EP_Decryption.pem'))
+closing_key    = PolyPseudo::Util.read_key(File.read('EP_Closing.pem'))
 
 case identity_or_pseudonym
 when PolyPseudo::Identity
