@@ -18,7 +18,7 @@ module PolyPseudo
           .add(point_2)
           .make_affine!
 
-      @identity = Util.oaep_decode(identity_point.x.to_s(2)).slice(3, 10)
+      @identity = Util.oaep_decode(identity_point.x.to_s(2)).slice(3, 10).force_encoding("UTF-8").strip
     end
 
     def identity
