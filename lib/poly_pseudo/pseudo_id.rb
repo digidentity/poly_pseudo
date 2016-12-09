@@ -19,7 +19,7 @@ module PolyPseudo
       case attributes["Type"]
       when /\A.*1\.2\.1\Z/
         Identity.new(attributes)
-      when /\A.*1\.2\.1\Z/
+      when /\A.*1\.2\.2\Z/
         Pseudonym.new(attributes)
       else
         raise "Invalid type"
