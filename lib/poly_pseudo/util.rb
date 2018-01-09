@@ -43,28 +43,13 @@ module PolyPseudo
       m
     end
 
-    def self.i2osp(x, len = nil)
-      raise ArgumentError, "integer too large" if len && x >= 256**len
-
-      StringIO.open do |buffer|
-        while x > 0
-          b = (x & 0xFF).chr
-          x >>= 8
-          buffer << b
-        end
-        s = buffer.string
-        s.force_encoding(Encoding::BINARY) if s.respond_to?(:force_encoding)
-        s.reverse!
-        s = len ? s.rjust(len, "\0") : s
-      end
-    end
-
     def self.mgf1(z, l)
       t = ''
 
-      (0..(l / 10)).each { |i|
-        t += Digest::SHA384.digest(z + i2osp(i, 4))
-      }
+      n = (l - 1) / 48 + 1
+      n.times do |i|
+        t << Digest::SHA384.digest(z + [i].pack('N'))
+      end
 
       t[0...l]
     end
