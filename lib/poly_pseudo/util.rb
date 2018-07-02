@@ -21,12 +21,13 @@ module PolyPseudo
     def oaep_decode(em, p = '', hlen = 10)
       raise 'message is too short!' if em.length < hlen * 2 + 1
 
-      maskedSeed = em[0...hlen]
-      maskedDB   = em[hlen..-1]
+      raise 'Y should be zero!' unless em[0] == "\x00"
+      maskedSeed = em[1..hlen]
+      maskedDB   = em[(hlen+1)..-1]
 
       seedMask = mgf1 maskedDB, hlen
       seed     = xor maskedSeed, seedMask
-      dbMask   = mgf1 seed, em.size - hlen
+      dbMask   = mgf1 seed, em.size - hlen - 1
       db       = xor maskedDB, dbMask
       pHash    = Digest::SHA384.digest(p)[0...hlen]
 
