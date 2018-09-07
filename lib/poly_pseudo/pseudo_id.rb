@@ -1,26 +1,13 @@
 module PolyPseudo
   module PseudoId
     def self.from_asn1(encoded)
-      attributes                           = {}
-      asn1                                 = OpenSSL::ASN1.decode(Base64.decode64(encoded))
-      attributes["Type"]                   = asn1.value[0].value.to_s
-      attributes["SchemaVersion"]          = asn1.value[1].value.to_i
-      attributes["SchemaKeyVersion"]       = asn1.value[2].value.to_i
-      attributes["Creator"]                = asn1.value[3].value.to_s
-      attributes["Recipient"]              = asn1.value[4].value.to_s
-      attributes["RecipientKeySetVersion"] = asn1.value[5].value.to_i
-      attributes["Point1"]                 = OpenSSL::PKey::EC::Point.new(PolyPseudo.config.group,
-                                                                          OpenSSL::BN.new(asn1.value[6].value[0].value, 2))
-      attributes["Point2"]                 = OpenSSL::PKey::EC::Point.new(PolyPseudo.config.group,
-                                                                          OpenSSL::BN.new(asn1.value[6].value[1].value, 2))
-      attributes["Point3"]                 = OpenSSL::PKey::EC::Point.new(PolyPseudo.config.group,
-                                                                          OpenSSL::BN.new(asn1.value[6].value[2].value, 2))
+      asn1 = OpenSSL::ASN1.decode(Base64.decode64(encoded))
 
-      case attributes["Type"]
+      case asn1.value[0].value.to_s
       when /\A.*1\.2\.1\Z/
-        Identity.new(attributes)
+        Identity.from_asn1(asn1)
       when /\A.*1\.2\.2\Z/
-        Pseudonym.new(attributes)
+        Pseudonym.from_asn1(asn1)
       else
         raise "Invalid type"
       end
