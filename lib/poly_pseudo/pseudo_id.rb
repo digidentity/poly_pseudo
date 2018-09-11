@@ -8,6 +8,10 @@ module PolyPseudo
         Identity.from_asn1(asn1)
       when /\A.*1\.2\.2\Z/
         Pseudonym.from_asn1(asn1)
+      when /\A.*1\.2\.3\Z/
+        Identity.from_asn1(asn1.value[1].value[0])
+      when /\A.*1\.2\.4\Z/
+        Pseudonym.from_asn1(asn1.value[1].value[0])
       else
         raise "Invalid type"
       end
